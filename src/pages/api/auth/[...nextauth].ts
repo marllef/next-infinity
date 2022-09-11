@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import * as bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 const prisma = new PrismaClient();
 
-export default NextAuth({
+export const nextAuthOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: "~marllefH~",
   session: {
@@ -45,4 +45,6 @@ export default NextAuth({
       },
     }),
   ],
-});
+};
+
+export default NextAuth(nextAuthOptions);

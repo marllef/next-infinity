@@ -4,25 +4,44 @@ import { Input } from "~/components/Input";
 import { AppLayout } from "~/layouts/AppLayout";
 import { Button } from "~/components/Button";
 import { api } from "~/utils/http";
+import { showError, showSuccess } from "~/utils/toast";
+import { InternalError } from "~/utils/helpers/InternalError";
+import { useRouter } from "next/router";
+import { AuthLogo } from "~/components/AuthLogo";
 
 const RegisterPage: NextPage = () => {
   const [items, setItems] = useState<any>({});
-  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const res = await api.post("/users", items);
+      if (items.password === items.confirmPassword) {
+        const res = await api.post("/users", items);
 
-      console.log(res.data);
+        if (res.status === 201) showSuccess(res.data.message);
+
+        setItems({});
+
+        return await router.push("/login");
+      }
+      throw new InternalError("As senhas não coincidem.");
     } catch (err: any) {
-      setError(err.message);
+      const error = new InternalError(err);
+      showError(error.message);
     }
   };
 
   return (
     <AppLayout withHeader={false}>
-      <form className="flex flex-col space-y-2 px-10" method="post">
+      <form
+        className="flex h-full flex-col max-w-md mx-auto space-y-3 px-10"
+        method="post"
+      >
+        <AuthLogo />
+        <div className="w-full text-center text-3xl pb-4 uppercase">
+          Criar Conta
+        </div>
         <Input
           name="name"
           placeholder="Nome"
@@ -37,6 +56,7 @@ const RegisterPage: NextPage = () => {
         <Input
           name="email"
           placeholder="Email"
+          type={"email"}
           value={items?.email || ""}
           onChange={(evnt) =>
             setItems({
@@ -57,8 +77,21 @@ const RegisterPage: NextPage = () => {
             })
           }
         />
-        <h3 className="text-slate-50 text-xs text-center">{error}</h3>
-        <Button onClick={handleSubmit}>Login</Button>
+        <Input
+          name="confirm_password"
+          value={items?.confirmPassword || ""}
+          type={"password"}
+          placeholder="Confirmar Senha"
+          onChange={(evnt) =>
+            setItems({
+              ...items,
+              confirmPassword: evnt.target.value,
+            })
+          }
+        />
+        <Button type="submit" onClick={handleSubmit}>
+          Cadastrar
+        </Button>
       </form>
     </AppLayout>
   );
