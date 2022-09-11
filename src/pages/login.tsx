@@ -37,7 +37,6 @@ const LoginPage: NextPage = () => {
     } catch (err: any) {
       const error = new InternalError(err);
       showError(error.message);
-      console.log(error.message);
     }
   };
 
