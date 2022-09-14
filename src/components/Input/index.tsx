@@ -9,7 +9,7 @@ export const Input = ({ label, className, ...rest }: Props) => {
     <>
       <label className="sr-only">{label}</label>
       <input
-        className={`${className} bg-gray-700 rounded px-3 py-2 
+        className={`${className} bg-slate-800 rounded px-3 py-2 
         focus:outline-none focus:ring ring-violet-600
         placeholder:text-slate-400`}
         {...rest}

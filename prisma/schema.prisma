@@ -11,19 +11,16 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   password String
-  email    String @unique
+  photoUrl String?
+  email    String  @unique
+
+  posts Post[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-}
-
-model Author {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  posts Post[]
 }
 
 model Post {
@@ -32,7 +29,9 @@ model Post {
   description String?
   url         String?
 
-  author   Author? @relation(fields: [authorId], references: [id])
+  stars Int? @default(0)
+
+  author   User?   @relation(fields: [authorId], references: [id])
   authorId String? @db.ObjectId
 
   visible Boolean @default(true)

@@ -33,7 +33,7 @@ const RegisterPage: NextPage = () => {
   };
 
   return (
-    <AppLayout withHeader={false}>
+    <AppLayout pageTitle="Infinity | Cadastre-se">
       <form
         className="flex h-full flex-col max-w-md mx-auto space-y-3 px-10"
         method="post"

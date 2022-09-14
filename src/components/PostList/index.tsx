@@ -1,19 +1,30 @@
-import { List, ListItem } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useEffect, useState } from "react";
+import { PostWithAuthor } from "~/interfaces/Post";
+import { Post } from "../Post";
 
-export const PostList = () => {
+interface Props {
+  data: PostWithAuthor[];
+}
+
+export const PostList = ({ data }: Props) => {
+  const [posts, setPosts] = useState<PostWithAuthor[]>([]);
+
+  useEffect(() => {
+    if (data) setPosts(data);
+  }, [data]);
+
   return (
-    <ul className="flex flex-col w-full h-full">
-      <li className="w-full min-h-[7rem] bg-gray-800 pl-3 pr-2 py-2 rounded">
-        <div className="flex w-full justify-between">
-          <h3 className="capitalize font-bold text-xl">Titulo do post</h3>
-          <MoreVertIcon />
-        </div>
-        <span className="text-xs text-violet-500">Autor | Categoria | Data</span>
-        <p className="text-sm">Descrição</p>
-      </li>
-      <li></li>
-      <li></li>
+    <ul className="flex flex-col w-full max-w-lg space-y-3 mx-auto h-full overflow-auto">
+      {(posts || []).map((post) => (
+        <li key={post.id}>
+          <Post {...post} />
+        </li>
+      ))}
+      {!posts.length && (
+        <h5 className="px-4 py-2 w-full text-center text-slate-500">
+          Nenhuma publicação
+        </h5>
+      )}
     </ul>
   );
 };

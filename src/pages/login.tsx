@@ -15,8 +15,8 @@ const LoginPage: NextPage = () => {
   const [items, setItems] = useState<any>({});
   const router = useRouter();
 
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     try {
       if (!items.email || !items.password)
         throw new Error("Informe email e senha");
@@ -41,7 +41,7 @@ const LoginPage: NextPage = () => {
   };
 
   return (
-    <AppLayout withHeader={false}>
+    <AppLayout pageTitle="Infinity | Login">
       <form
         className="flex h-full flex-col max-w-md mx-auto space-y-3 px-10"
         method="post"

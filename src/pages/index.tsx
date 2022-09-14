@@ -1,19 +1,23 @@
-import { Input } from "@mui/material";
 import type { NextPage } from "next";
-import colors from "tailwindcss/colors";
+import { useEffect } from "react";
+import { CreatePost } from "~/components/CreatePost";
 import { PostList } from "~/components/PostList";
-import { HeaderBar } from "../components/Header";
+import { useFetch } from "~/hooks/useFetch";
+import { AppLayout } from "~/layouts/AppLayout";
+import { showError } from "~/utils/toast";
 
 const Home: NextPage = () => {
+  const { data, error } = useFetch("/api/posts");
+
+  useEffect(() => {
+    if (error) showError(error);
+  }, [error]);
+
   return (
-    <div className="flex flex-col justify-start items-start w-full h-screen bg-slate-900">
-      <HeaderBar />
-      <main className="w-full p-2 text-slate-50">
-        <div id="post-list">
-          <PostList />
-        </div>
-      </main>
-    </div>
+    <AppLayout>
+      <CreatePost />
+      <PostList data={data} />
+    </AppLayout>
   );
 };
 
