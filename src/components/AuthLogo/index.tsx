@@ -6,7 +6,7 @@ export const AuthLogo = () => {
         <span className="text-3xl text-violet-400">
           Infinity
           <span className="text-slate-50 font-bold uppercase bg-violet-500 rounded-full px-2 py-1 text-xs">
-            Jobs
+            Blog
           </span>
         </span>
       </div>

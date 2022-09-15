@@ -1,3 +1,6 @@
+import { Add } from "@mui/icons-material";
+import { Fab } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { FormEvent, MouseEvent, useState } from "react";
 import { InternalError } from "~/utils/helpers/InternalError";
 import { api } from "~/utils/http";
@@ -9,12 +12,16 @@ import { TextArea } from "../TextArea";
 export const CreatePost = () => {
   const [itens, setItens] = useState<any>({});
   const [open, setOpen] = useState(false);
+  const session = useSession();
 
   const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
     console.log(itens);
     try {
+      if (!itens.title) throw new Error("Informe um título para a publicação.");
+
       const response = await api.post("/posts", { ...itens });
       console.log(response.data);
+      handleCancel();
     } catch (err: any) {
       const error = new InternalError(err);
       showError(error.message);
@@ -30,8 +37,10 @@ export const CreatePost = () => {
     setOpen(true);
   };
 
+  if (session.status === "unauthenticated") return null;
+
   return (
-    <div className="flex w-full flex-col space-y-2 max-w-lg pb-4">
+    <div className="flex w-full mx-auto flex-col px-4  space-y-2 sm:pb-3">
       {open ? (
         <>
           <Input
@@ -61,7 +70,17 @@ export const CreatePost = () => {
           </div>
         </>
       ) : (
-        <Button onClick={handleOpen}>Nova Postagem</Button>
+        <>
+          <Button className="hidden sm:block" onClick={handleOpen}>
+            Nova Postagem
+          </Button>
+          <Fab
+            onClick={handleOpen}
+            className="absolute right-10 bottom-10 sm:hidden bg-violet-600 active:bg-violet-700 hover:bg-violet-500 text-slate-50"
+          >
+            <Add />
+          </Fab>
+        </>
       )}
     </div>
   );

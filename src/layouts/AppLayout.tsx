@@ -21,9 +21,10 @@ export const AppLayout = ({
         <title>{pageTitle}</title>
       </Head>
       {!noHeader && <HeaderBar />}
-      <main className="flex flex-col items-center space-y-2 w-full h-full py-2 px-4 text-slate-50 max-w-4xl mx-auto overflow-hidden">
+      <main className="flex flex-col items-center space-y-2 w-full h-full py-2 px-4 text-slate-50 max-w-4xl mx-auto overflow-auto scrollbar-thumb-slate-700 hover:scrollbar-thumb-slate-600 active:scrollbar-thumb-slate-800 scrollbar-thin">
         {children}
       </main>
+
       {!noFooter && (
         <footer className="flex flex-col w-full justify-center items-center ">
           <p className="text-slate-300 text-xs">Developed by Marllef</p>

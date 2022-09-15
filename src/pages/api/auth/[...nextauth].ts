@@ -38,7 +38,10 @@ export const nextAuthOptions: NextAuthOptions = {
           (await bcrypt.compare(credentials?.password!, user.password))
         ) {
           const { password, ...rest } = user;
-          return rest;
+          return {
+            image: rest.photoUrl,
+            ...rest,
+          };
         }
 
         return null;

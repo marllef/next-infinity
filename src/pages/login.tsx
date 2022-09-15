@@ -10,6 +10,7 @@ import { showError, showSuccess } from "~/utils/toast";
 import { useRouter } from "next/router";
 import { AuthLogo } from "~/components/AuthLogo";
 import { Button } from "~/components/Button";
+import { getToken } from "next-auth/jwt";
 
 const LoginPage: NextPage = () => {
   const [items, setItems] = useState<any>({});
@@ -85,13 +86,9 @@ const LoginPage: NextPage = () => {
 export default LoginPage;
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    nextAuthOptions
-  );
+  const token = await getToken({ req: context.req });
 
-  if (session) {
+  if (token) {
     return {
       redirect: {
         destination: "/",
