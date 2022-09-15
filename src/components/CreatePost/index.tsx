@@ -8,6 +8,7 @@ import { showError } from "~/utils/toast";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { TextArea } from "../TextArea";
+import colors from "tailwindcss/colors";
 
 export const CreatePost = () => {
   const [itens, setItens] = useState<any>({});
@@ -78,12 +79,24 @@ export const CreatePost = () => {
           <Button className="hidden sm:block" onClick={handleOpen}>
             Nova Postagem
           </Button>
-          <Fab
-            onClick={handleOpen}
-            className="absolute right-5 bottom-12 sm:hidden bg-violet-600 active:bg-violet-700 hover:bg-violet-500 text-slate-50"
-          >
-            <Add />
-          </Fab>
+          <div className="sm:hidden">
+            <Fab
+              onClick={handleOpen}
+              variant="circular"
+              color="primary"
+              sx={{
+                position: "absolute",
+                bottom: 50,
+                right: 16,
+                bgcolor: colors.violet[500],
+                "&:hover": {
+                  bgcolor: colors.violet[600],
+                },
+              }}
+            >
+              <Add />
+            </Fab>
+          </div>
         </>
       )}
     </div>
