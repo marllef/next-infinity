@@ -8,6 +8,7 @@ export const Post = ({
   author,
   id,
   createdAt,
+  updatedAt,
   stars,
   title,
   description,
@@ -19,8 +20,11 @@ export const Post = ({
         className="w-full min-h-[7rem] bg-gray-800 space-y-2 px-3 py-2 rounded-t"
       >
         <PostHeader
+          postId={id}
           date={new Date(createdAt)}
           user={{
+            id: author?.id,
+            email: author?.email,
             name: author?.name || "Anonimous",
             photo: author?.photoUrl ?? "",
           }}

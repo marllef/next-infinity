@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   }, [error]);
 
   return (
-    <AppLayout noFooter>
+    <AppLayout>
       <CreatePost />
       <PostList data={data} />
     </AppLayout>

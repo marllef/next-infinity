@@ -23,6 +23,9 @@ export default async function postHandler(
           include: {
             author: true,
           },
+          orderBy: {
+            createdAt: "desc",
+          },
         });
 
         return res.status(200).json({

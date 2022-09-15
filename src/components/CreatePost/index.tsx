@@ -20,7 +20,7 @@ export const CreatePost = () => {
       if (!itens.title) throw new Error("Informe um título para a publicação.");
 
       const response = await api.post("/posts", { ...itens });
-      console.log(response.data);
+
       handleCancel();
     } catch (err: any) {
       const error = new InternalError(err);
@@ -40,7 +40,11 @@ export const CreatePost = () => {
   if (session.status === "unauthenticated") return null;
 
   return (
-    <div className="flex w-full mx-auto flex-col px-4  space-y-2 sm:pb-3">
+    <div
+      className={`flex w-full mx-auto flex-col px-4  space-y-2 ${
+        open ? "pb-3" : ""
+      } `}
+    >
       {open ? (
         <>
           <Input
@@ -76,7 +80,7 @@ export const CreatePost = () => {
           </Button>
           <Fab
             onClick={handleOpen}
-            className="absolute right-10 bottom-10 sm:hidden bg-violet-600 active:bg-violet-700 hover:bg-violet-500 text-slate-50"
+            className="absolute right-5 bottom-12 sm:hidden bg-violet-600 active:bg-violet-700 hover:bg-violet-500 text-slate-50"
           >
             <Add />
           </Fab>
