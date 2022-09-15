@@ -37,7 +37,7 @@ Algumas das telas do aplicativo:
 
 - Para executar este projeto localmente siga as etapas descritas neste documento.
 
-- Uma versão funcional deste projeto pode ser acessado [clicando aqui](http://linktoo.tk).
+- Uma versão funcional deste projeto pode ser acessado [clicando aqui](https://infinity-blog.netlify.app/).
 
 ## Pré-requisitos
 
