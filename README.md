@@ -1,5 +1,7 @@
 # Infinity Blog
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f76897c9-c6d9-41e3-8baa-dfdde98d223a/deploy-status)](https://app.netlify.com/sites/infinity-blog/deploys)
+
 _Um blog para publicar pensamentos cotidianos._
 
 ## Tecnologias Utilizadas
