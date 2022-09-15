@@ -1,8 +1,8 @@
 import { GetServerSideProps, NextPage } from "next";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Input } from "~/components/Input";
 import { AppLayout } from "~/layouts/AppLayout";
-import { getCsrfToken, signIn } from "next-auth/react";
+import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth";
 import { nextAuthOptions } from "./api/auth/[...nextauth]";
 import { InternalError } from "~/utils/helpers/InternalError";
@@ -15,6 +15,11 @@ import { getToken } from "next-auth/jwt";
 const LoginPage: NextPage = () => {
   const [items, setItems] = useState<any>({});
   const router = useRouter();
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.status === "authenticated") router.push("/");
+  }, [session]);
 
   const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -84,20 +89,3 @@ const LoginPage: NextPage = () => {
 };
 
 export default LoginPage;
-
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const token = await getToken({ req: context.req });
-
-  if (token) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
