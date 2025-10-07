@@ -1,11 +1,10 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import { MenuItem } from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Badge } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { Avatar } from "../Avatar";
-import { Button } from "../Button";
 import { UserPopover } from "../UserPopover";
 
 export const HeaderBar = () => {
@@ -26,11 +25,22 @@ export const HeaderBar = () => {
         {session.status === "authenticated" ? (
           <UserPopover src={session.data.user?.image ?? ""} />
         ) : pathname?.includes("login") ? (
-          <Link href={"/register"}>
-            <button className="bg-violet-600 px-2 rounded hover:opacity-90 active:opacity-80">
-              Registrar
-            </button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href={"/register"}>
+              <button className="bg-violet-600 px-2 rounded hover:opacity-90 active:opacity-80">
+                Registrar
+              </button>
+            </Link>
+            <div className="flex items-center gap-2">
+              <Badge color="error" variant="dot" overlap="circular">
+                <div>
+                  <Avatar size={30} src="" />
+                </div>
+              </Badge>
+              <span className="text-sm">Convidado</span>
+              <NotificationsIcon fontSize="small" />
+            </div>
+          </div>
         ) : (
           <Link href={"/login"}>
             <button className="bg-violet-600 px-2 rounded hover:opacity-90 active:opacity-80">
